@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择 Bybit API 功能</title>
+</head>
+<body>
+    <h2>选择要使用的 Bybit API 功能</h2>
+    <form id="apiForm">
+        <label for="functionSelect">选择功能：</label><br>
+        <select id="functionSelect" name="function">
+            <option value="balance">查询余额</option>
+            <option value="position">查询持仓</option>
+            <option value="setLever">设置杠杆</option>
+            <option value="fundingRatio">获取资金费率</option>
+            <option value="price">查询价格</option>
+            <option value="bybitTime">获取 Bybit 时间</option>
+            <option value="trade">下单交易</option>
+            <!-- 可以根据需要添加更多选项 -->
+        </select><br><br>
+        
+        <label for="apiKey">API Key：</label><br>
+        <input type="text" id="apiKey" name="apiKey" required><br><br>
+        
+        <label for="secretKey">Secret Key：</label><br>
+        <input type="text" id="secretKey" name="secretKey" required><br><br>
+        
+        <label for="password">Password：</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+        
+        <input type="submit" value="提交">
+    </form>
+
+    <p id="response"></p>
+
+    <script>
+        document.getElementById('apiForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerHTML = `Response: ${JSON.stringify(data)}`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
